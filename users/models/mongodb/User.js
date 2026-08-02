@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Name = require("../../../helpers/mongodb/Name");
 const { PHONE, EMAIL } = require("../../../helpers/mongodb/mongooseValidators");
 const Image = require("../../../helpers/mongodb/Images");
-const { add } = require("../../../helpers/mongodb/Address");
+const Address = require("../../../helpers/mongodb/Address");
 
 const userSchema = new mongoose.Schema({
   name: Name,
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     MaxLength: 20,
   },
   image: Image,
-  address: address,
+  address: Address,
   isRecruiter: {
     type: Boolean,
     default: false,
@@ -29,3 +29,5 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("user", userSchema);
+
+module.exports = User;

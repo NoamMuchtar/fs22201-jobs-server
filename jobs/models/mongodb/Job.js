@@ -26,25 +26,25 @@ const jobSchema = new mongoose.Schema({
       min: 0,
       default: 0,
     },
-    phone: PHONE,
-    email: EMAIL,
-    applyLink: URL,
-    image: Image,
-    jobNumber: {
-      type: Number,
-      required: true,
-      min: 1000000,
-      max: 9999999,
-    },
-    savedBy: [String],
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    recruiter_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
+  },
+  phone: PHONE,
+  email: { ...EMAIL, uniqe: false },
+  applyLink: URL,
+  image: Image,
+  jobNumber: {
+    type: Number,
+    required: true,
+    min: 1000000,
+    max: 9999999,
+  },
+  savedBy: [String],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  recruiter_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
   },
 });
 
