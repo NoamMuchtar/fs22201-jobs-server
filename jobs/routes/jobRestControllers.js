@@ -8,6 +8,8 @@ const {
   deleteJob,
   saveJob,
 } = require("../models/jobsAccessDataService");
+const auth = require("../../auth/authService");
+const normailizeJob = require("../helpers/normalizeJob");
 const router = express.Router();
 
 // get all jobs
@@ -21,9 +23,18 @@ router.get("/", async (req, res) => {
 });
 
 // create new job
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
-    let job = await createJob(req.body);
+    const userInfo = req.user;
+    if (!userInfo.isRecruiter) {
+      return res.status(403).send("Only Recruiter users can create new job");
+    }
+
+    // let job = await createJob(req.body);
+
+    let normalizedJob = await normailizeJob(req.body, userInfo._id);
+    let job = await createJob(normalizedJob);
+
     res.send(job).status(201);
   } catch (error) {
     res.status(400).send(error.message);
@@ -31,17 +42,23 @@ router.post("/", async (req, res) => {
 });
 
 // get my jobs
-router.get("/my-jobs", async (req, res) => {
+router.get("/my-jobs", auth, async (req, res) => {
   try {
-    const { id } = req.body;
-    let myJobs = await getMyJobs(id);
+    // const { id } = req.body;
+    const userInfo = req.user;
+
+    if (!userInfo.isRecruiter) {
+      return res.status(403).send("Only Recruiter users can get my jobs");
+    }
+
+    let myJobs = await getMyJobs(userInfo._id);
     res.status(200).send(myJobs);
   } catch (error) {
     res.status(400).send(error.message);
   }
 });
 
-// get card by id
+// get job by id
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -54,11 +71,18 @@ router.get("/:id", async (req, res) => {
 
 // update job
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedJob = req.body;
-    let job = await updateJob(id, updatedJob);
+    const userInfo = req.user;
+    const originalJobFromDB = await getJob(id);
+    if (!userInfo.isAdmin && userInfo._id != originalJobFromDB.recruiter_id) {
+      return res.status(403).send("Only the job creator or admin can update");
+    }
+
+    let normalizedJob = await normailizeJob(req.body, userInfo._id);
+    let job = await updateJob(id, normalizedJob);
+
     res.status(201).send(job);
   } catch (error) {
     res.status(400).send(error.message);
@@ -66,9 +90,15 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete job
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
+    const userInfo = req.user;
+    const originalJobFromDB = await getJob(id);
+    if (!userInfo.isAdmin && userInfo._id != originalJobFromDB.recruiter_id) {
+      return res.status(403).send("Only the job creator or admin can delete");
+    }
+
     let job = await deleteJob(id);
     res.status(200).send(job);
   } catch (error) {
@@ -77,7 +107,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // save job
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
     const { userId } = req.body;
