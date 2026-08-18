@@ -1,14 +1,17 @@
 const { generateAuthToken } = require("../../auth/providers/jwt");
+const { createError } = require("../../utils/handleErrors");
+const { generateUserPassword, comparePassword } = require("../helpers/bcrypt");
 const User = require("./mongodb/User");
 
 // register new user
 const registerUser = async (newUser) => {
   try {
+    newUser.password = await generateUserPassword(newUser.password);
     let user = new User(newUser);
     user = await user.save();
     return user;
   } catch (error) {
-    throw new Error("Mongoos " + error.message);
+    return createError("Mongoos", error.message);
   }
 };
 
@@ -18,7 +21,7 @@ const getUser = async (userId) => {
     const user = await User.findById(userId);
     return user;
   } catch (error) {
-    throw new Error("Mongoos " + error.message);
+    return createError("Mongoos", error.message);
   }
 };
 
@@ -28,7 +31,7 @@ const getAllUsers = async () => {
     const users = await User.find();
     return users;
   } catch (error) {
-    throw new Error("Mongoos " + error.message);
+    return createError("Mongoos", error.message);
   }
 };
 
@@ -37,17 +40,17 @@ const loginUser = async (email, password) => {
   try {
     const userFromDB = await User.findOne({ email });
     if (!userFromDB) {
-      throw new Error("Authntication Error: User not exsist");
+      return createError("Authntication", "User not exsist", 401);
     }
-
-    if (userFromDB.password !== password) {
-      throw new Error("Authntication Error: Invalid email or password");
+    const compaeration = await comparePassword(password, userFromDB.password);
+    if (!compaeration) {
+      return createError("Authntication", "Invalid email or password", 401);
     }
 
     const token = generateAuthToken(userFromDB);
     return token;
   } catch (error) {
-    throw new Error(error);
+    createError("Authntication", error.message);
   }
 };
 

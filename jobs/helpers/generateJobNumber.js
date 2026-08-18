@@ -1,10 +1,15 @@
 const _ = require("lodash");
 const Job = require("../models/mongodb/Job");
+const { createError } = require("../../utils/handleErrors");
 
 const generateJobNumber = async () => {
   let jobsCount = Job.countDocuments();
   if (jobsCount === 8_999_999) {
-    throw new Error("The app reached to the maximum jobs count");
+    return createError(
+      "Mongoose",
+      "The app reached to the maximum jobs count",
+      409,
+    );
   }
 
   let random;
@@ -20,7 +25,7 @@ const isJobNumberExsist = async (jobNumber) => {
     const jobWidthThisJobNumber = await Job.findOne({ jobNumber });
     return Boolean(jobWidthThisJobNumber);
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message, 500);
   }
 };
 module.exports = generateJobNumber;

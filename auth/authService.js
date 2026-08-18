@@ -1,3 +1,4 @@
+const { createError, handleError } = require("../utils/handleErrors");
 const { verifyToken } = require("./providers/jwt");
 
 const TOKEN_GENERATOR = "jwt";
@@ -7,18 +8,18 @@ const auth = (req, res, next) => {
     try {
       const tokenFromClient = req.header("x-auth-token");
       if (!tokenFromClient) {
-        throw new Error("Authentication Error: Please login");
+        return createError("Authentication", "Please login", 401);
       }
 
       const userInfo = verifyToken(tokenFromClient);
       if (!userInfo) {
-        throw new Error("Authentication Error: Unauthorize user");
+        return createError("Authentication", "Unauthorize user", 401);
       }
 
       req.user = userInfo;
       next();
     } catch (error) {
-      return res.status(401).send(error.message);
+      return handleError(res, error.status, error.message);
     }
   }
 };

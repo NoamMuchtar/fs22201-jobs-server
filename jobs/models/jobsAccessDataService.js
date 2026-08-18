@@ -1,3 +1,4 @@
+const { createError } = require("../../utils/handleErrors");
 const Job = require("./mongodb/Job");
 
 const DB = "mongodb";
@@ -10,7 +11,7 @@ const createJob = async (newJob) => {
       job = await job.save();
       return job;
     } catch (error) {
-      throw new Error("Mongoose: " + error.message);
+      return createError("Mongoose", error.message, 500);
     }
   }
 };
@@ -22,7 +23,7 @@ const getAllJobs = async () => {
       let jobs = await Job.find();
       return jobs;
     } catch (error) {
-      throw new Error("Mongoose: " + error.message);
+      return createError("Mongoose", error.message, 500);
     }
   }
 };
@@ -34,7 +35,7 @@ const getJob = async (jobId) => {
       let job = await Job.findById(jobId);
       return job;
     } catch (error) {
-      throw new Error("Mongoose: " + error.message);
+      return createError("Mongoose", error.message, 500);
     }
   }
 };
@@ -45,7 +46,7 @@ const getMyJobs = async (recruiterId) => {
     let myJobs = await Job.find({ recruiter_id: recruiterId });
     return myJobs;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message, 500);
   }
 };
 
@@ -55,7 +56,7 @@ const updateJob = async (jobId, updatedJob) => {
     let job = await Job.findByIdAndUpdate(jobId, updatedJob, { new: true });
     return job;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message, 500);
   }
 };
 
@@ -65,7 +66,7 @@ const deleteJob = async (jobId) => {
     let job = await Job.findByIdAndDelete(jobId);
     return job;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message, 500);
   }
 };
 
@@ -88,7 +89,7 @@ const saveJob = async (jobId, userId) => {
     await job.save();
     return job;
   } catch (error) {
-    throw new Error("Mongoose: " + error.message);
+    return createError("Mongoose", error.message, 500);
   }
 };
 module.exports = {

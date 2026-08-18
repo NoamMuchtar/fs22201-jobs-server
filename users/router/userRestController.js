@@ -6,6 +6,9 @@ const {
   loginUser,
 } = require("../models/usersAccrssDataService");
 const auth = require("../../auth/authService");
+const { handleError, createError } = require("../../utils/handleErrors");
+const returnUser = require("../helpers/returnUser");
+const validateRegistraion = require("../validation/userValidationService");
 
 const router = express.Router();
 
@@ -13,10 +16,17 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     let newUser = req.body;
+
+    const errorMessage = validateRegistraion(newUser);
+
+    if (errorMessage != "") {
+      return createError("Validation", errorMessage, 400);
+    }
+
     let user = await registerUser(newUser);
-    res.status(201).send(user);
+    res.status(201).send(returnUser(user));
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -29,11 +39,15 @@ router.get("/:id", auth, async (req, res) => {
     let user = await getUser(id);
 
     if (!userInfo.isAdmin && userInfo._id != user._id) {
-      return res.status(403).send("Only the own user can show is details");
+      return createError(
+        "Authorization",
+        "Only the own user can show is details",
+        403,
+      );
     }
-    res.status(200).send(user);
+    res.status(200).send(returnUser(user));
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -43,12 +57,16 @@ router.get("/", auth, async (req, res) => {
     const userInfo = req.user;
 
     if (!userInfo.isAdmin) {
-      return res.status(403).send("Only admin user can get all users list");
+      return createError(
+        "Authorization",
+        "Only admin user can get all users list",
+        403,
+      );
     }
     let users = await getAllUsers();
     res.status(200).send(users);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -56,10 +74,14 @@ router.get("/", auth, async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
+    const errorMessage = validateRegistraion.loginValidate(req.body);
+    if (errorMessage != "") {
+      return createError("Validation", errorMessage, 400);
+    }
     const token = await loginUser(email, password);
     res.status(200).send(token);
   } catch (error) {
-    res.status(400).send(error.message);
+    return handleError(res, error.status, error.message);
   }
 });
 module.exports = router;
