@@ -1,8 +1,8 @@
 const connectAtlasDB = require("./mongodb/connectToMongodbAtlas");
 const connectToLoaclDB = require("./mongodb/connectToMongodbLocally");
 
-const ENVIROMENT = "development";
-const DB_SERVICE = "mongodb";
+const ENVIROMENT = process.env.ENVIROMENT;
+const DB_SERVICE = process.env.DB_SERVICE;
 
 const connectDB = async () => {
   if (DB_SERVICE === "mongodb") {

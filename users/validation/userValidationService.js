@@ -1,7 +1,7 @@
 const loginValidation = require("./Joi/loginValidation");
 const registerValidation = require("./Joi/registerValidation");
 
-const validator = "Joi";
+const validator = process.env.VALIDATOR;
 
 const validateRegistraion = (user) => {
   if (validator === "Joi") {

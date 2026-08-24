@@ -1,7 +1,7 @@
 const { createError, handleError } = require("../utils/handleErrors");
 const { verifyToken } = require("./providers/jwt");
 
-const TOKEN_GENERATOR = "jwt";
+const TOKEN_GENERATOR = process.env.TOKEN_GENERATOR;
 
 const auth = (req, res, next) => {
   if (TOKEN_GENERATOR === "jwt") {

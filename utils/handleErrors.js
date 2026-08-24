@@ -10,7 +10,7 @@ const createError = (validatior, message, status = 400) => {
 };
 
 const handleError = (res, status = 500, message = "Internal Server Error") => {
-  console.log(message);
+  res.locals.errorMessage = message;
   return res.status(status).send(message);
 };
 

@@ -1,6 +1,7 @@
 const { generateAuthToken } = require("../../auth/providers/jwt");
 const { createError } = require("../../utils/handleErrors");
 const { generateUserPassword, comparePassword } = require("../helpers/bcrypt");
+const returnUser = require("../helpers/returnUser");
 const User = require("./mongodb/User");
 
 // register new user
@@ -50,8 +51,66 @@ const loginUser = async (email, password) => {
     const token = generateAuthToken(userFromDB);
     return token;
   } catch (error) {
-    createError("Authntication", error.message);
+    return createError("Authntication", error.message);
   }
 };
 
-module.exports = { registerUser, getUser, getAllUsers, loginUser };
+// update user
+const updateUser = async (userId, updatedUser) => {
+  try {
+    const userFromDB = await User.findById(userId);
+
+    if (!userFromDB) {
+      return createError("Authentication", "User not exist", 400);
+    }
+
+    let user = await User.findByIdAndUpdate(userId, updatedUser);
+    user = await user.save();
+    return returnUser(user);
+  } catch (error) {
+    return createError("Mongoose", error.message);
+  }
+};
+
+// update isRecruiter status
+const changeRecruiterStatus = async (userId) => {
+  try {
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return createError("Authentication", "User not exsist", 400);
+    }
+
+    user.isRecruiter = !user.isRecruiter;
+    user = await user.save();
+    return returnUser(user);
+  } catch (error) {
+    return createError("Mongoose", error.message);
+  }
+};
+
+// delete user
+const deleteUser = async (userId) => {
+  try {
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return createError("Authentication", "User not exsist", 400);
+    }
+
+    user = await User.findOneAndDelete(userId);
+    return returnUser(user);
+  } catch (error) {
+    return createError("Mongoose", error.message);
+  }
+};
+
+module.exports = {
+  registerUser,
+  getUser,
+  getAllUsers,
+  loginUser,
+  updateUser,
+  changeRecruiterStatus,
+  deleteUser,
+};

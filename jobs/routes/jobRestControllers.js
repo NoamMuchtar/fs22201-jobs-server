@@ -11,6 +11,7 @@ const {
 const auth = require("../../auth/authService");
 const normailizeJob = require("../helpers/normalizeJob");
 const { handleError, createError } = require("../../utils/handleErrors");
+const jobValidation = require("../validation/jobsValidationService");
 const router = express.Router();
 
 // get all jobs
@@ -35,7 +36,10 @@ router.post("/", auth, async (req, res) => {
       );
     }
 
-    // let job = await createJob(req.body);
+    const validationErrorMessage = jobValidation(req.body);
+    if (validationErrorMessage != "") {
+      return createError("Validation", validationErrorMessage, 400);
+    }
 
     let normalizedJob = await normailizeJob(req.body, userInfo._id);
     let job = await createJob(normalizedJob);
@@ -87,6 +91,11 @@ router.put("/:id", auth, async (req, res) => {
         "Only the job creator or admin can update",
         403,
       );
+    }
+
+    const validationErrorMessage = jobValidation(req.body);
+    if (validationErrorMessage != "") {
+      return createError("validation", validationErrorMessage, 400);
     }
 
     let normalizedJob = await normailizeJob(req.body, userInfo._id);
