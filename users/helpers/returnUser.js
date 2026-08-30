@@ -10,6 +10,8 @@ const returnUser = (user) => {
       url: user.image.url,
       alt: user.image.alt,
     },
+    isRecruiter: user.isRecruiter,
+    isAdmin: user.isAdmin,
   };
 };
 
