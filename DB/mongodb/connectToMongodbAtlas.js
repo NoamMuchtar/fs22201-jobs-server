@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const CONNECTION_STRING = "";
+const CONNECTION_STRING = process.env.ATLAS_CONNECTION_STRING;
 
 const connectAtlasDB = async () => {
   try {

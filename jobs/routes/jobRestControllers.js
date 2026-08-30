@@ -85,6 +85,7 @@ router.put("/:id", auth, async (req, res) => {
     const { id } = req.params;
     const userInfo = req.user;
     const originalJobFromDB = await getJob(id);
+
     if (!userInfo.isAdmin && userInfo._id != originalJobFromDB.recruiter_id) {
       return createError(
         "Authorization",
@@ -92,7 +93,6 @@ router.put("/:id", auth, async (req, res) => {
         403,
       );
     }
-
     const validationErrorMessage = jobValidation(req.body);
     if (validationErrorMessage != "") {
       return createError("validation", validationErrorMessage, 400);
@@ -103,7 +103,7 @@ router.put("/:id", auth, async (req, res) => {
 
     res.status(201).send(job);
   } catch (error) {
-    return handleError(res, error.status, res.message);
+    return handleError(res, error.status, error.message);
   }
 });
 
@@ -131,9 +131,9 @@ router.delete("/:id", auth, async (req, res) => {
 // save job
 router.patch("/:id", auth, async (req, res) => {
   try {
+    const userInfo = req.user;
     const { id } = req.params;
-    const { userId } = req.body;
-    let job = await saveJob(id, userId);
+    let job = await saveJob(id, userInfo._id);
     res.status(200).send(job);
   } catch (error) {
     return handleError(res, 400, error.message);

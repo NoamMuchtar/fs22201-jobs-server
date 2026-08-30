@@ -11,7 +11,10 @@ const {
 const auth = require("../../auth/authService");
 const { handleError, createError } = require("../../utils/handleErrors");
 const returnUser = require("../helpers/returnUser");
-const validateRegistraion = require("../validation/userValidationService");
+const {
+  validateRegistraion,
+  loginValidate,
+} = require("../validation/userValidationService");
 
 const router = express.Router();
 
@@ -77,7 +80,7 @@ router.get("/", auth, async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
-    const errorMessage = validateRegistraion.loginValidate(req.body);
+    const errorMessage = loginValidate(req.body);
     if (errorMessage != "") {
       return createError("Validation", errorMessage, 400);
     }
@@ -98,7 +101,7 @@ router.put("/:id", auth, async (req, res) => {
     if (userInfo._id !== id) {
       return createError(
         "Authorization",
-        "Only thw own user can edit is details",
+        "Only the own user can edit is details",
         403,
       );
     }
@@ -124,7 +127,7 @@ router.patch("/:id", auth, async (req, res) => {
     if (userInfo._id !== id) {
       return createError(
         "Authorization",
-        "Only thw own user can change is status",
+        "Only the own user can change is status",
         403,
       );
     }

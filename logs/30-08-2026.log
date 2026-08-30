@@ -1,0 +1,117 @@
+[30/08/2026 10:15:33] GET /test 200  |  1.778 ms
+[30/08/2026 10:15:41] GET /jpbs 404  |  0.890 ms || Path not found
+[30/08/2026 10:15:46] GET /jobs 200  |  14.287 ms
+[30/08/2026 10:16:04] GET /jobs 200  |  5.198 ms
+[30/08/2026 10:16:10] GET /jobs 200  |  68.315 ms
+[30/08/2026 10:16:39] POST /users 500  |  1.591 ms || validateRegistraion is not a function
+[30/08/2026 10:16:51] POST /users 500  |  0.573 ms || validateRegistraion is not a function
+[30/08/2026 10:20:26] POST /users 400  |  6.194 ms || Validation Error: "phone" is required
+[30/08/2026 10:21:08] POST /users 400  |  5.523 ms || Validation Error: Phone must be Israeli valid phone number
+[30/08/2026 10:21:15] POST /users 201  |  162.211 ms
+[30/08/2026 10:22:25] POST /users 400  |  3.336 ms || Validation Error: "name" is required
+[30/08/2026 10:22:39] POST /users/login 500  |  0.848 ms || validateRegistraion.loginValidate is not a function
+[30/08/2026 10:23:19] POST /users/login 400  |  4.003 ms || Validation Error: [object Object]
+[30/08/2026 10:23:30] POST /users/login 400  |  2.957 ms || Validation Error: [object Object]
+[30/08/2026 10:23:33] POST /users/login 400  |  4.071 ms || Validation Error: [object Object]
+[30/08/2026 10:24:16] POST /users/login 400  |  5.991 ms || Validation Error: "email" is required
+[30/08/2026 10:24:21] POST /users/login 400  |  70.579 ms || Authntication Error: User not exsist
+[30/08/2026 10:24:43] POST /users/login 400  |  144.790 ms || Authntication Error: Invalid email or password
+[30/08/2026 10:24:52] POST /users/login 200  |  146.910 ms
+[30/08/2026 10:25:53] GET /users/ 403  |  1.840 ms || Authorization Error: Only admin user can get all users list
+[30/08/2026 10:26:33] GET /users/ 403  |  1.313 ms || Authorization Error: Only admin user can get all users list
+[30/08/2026 10:26:34] GET /users/ 403  |  1.373 ms || Authorization Error: Only admin user can get all users list
+[30/08/2026 10:26:40] GET /users/ 403  |  0.966 ms || Authorization Error: Only admin user can get all users list
+[30/08/2026 10:26:56] POST /users/login 200  |  166.661 ms
+[30/08/2026 10:27:14] GET /users/ 200  |  67.942 ms
+[30/08/2026 10:27:57] GET /users/ 401  |  0.382 ms || Authentication Error: Please login
+[30/08/2026 10:28:30] POST /users/ 201  |  160.472 ms
+[30/08/2026 10:29:14] GET /users/6a93db9e769b7ecd65c816ec 401  |  1.389 ms || Authentication Error: Please login
+[30/08/2026 10:29:24] GET /users/6a93db9e769b7ecd65c816ec 403  |  73.195 ms || Authorization Error: Only the own user can show is details
+[30/08/2026 10:29:34] GET /users/6a93db9e769b7ecd65c816ec 200  |  63.251 ms
+[30/08/2026 10:29:40] GET /users/6a93db9e769b7ecd65c816ec 401  |  0.376 ms || Authentication Error: Please login
+[30/08/2026 10:29:58] GET /users/6a93d9ea7147d9fbf23299c0 401  |  0.393 ms || Authentication Error: Please login
+[30/08/2026 10:30:02] GET /users/6a93d9ea7147d9fbf23299c0 200  |  62.844 ms
+[30/08/2026 10:31:09] PUT /users/6a93d9ea7147d9fbf23299c0 401  |  0.390 ms || Authentication Error: Please login
+[30/08/2026 10:31:19] PUT /users/6a93d9ea7147d9fbf23299c0 400  |  149.476 ms || Mongoose Error: Plan executor error during findAndModify :: caused by :: E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "israel@gmail.com" }
+[30/08/2026 10:31:44] PUT /users/6a93d9ea7147d9fbf23299c0 201  |  190.802 ms
+[30/08/2026 10:32:22] PUT /users/6a93d9ea7147d9fbf23299c0 201  |  192.215 ms
+[30/08/2026 10:32:36] PUT /users/6a93db9e769b7ecd65c816ec 400  |  0.596 ms || Authorization Error: Only thw own user can edit is details
+[30/08/2026 10:33:01] PUT /users/6a93db9e769b7ecd65c816ec 400  |  3.071 ms || Authorization Error: Only the own user can edit is details
+[30/08/2026 10:33:42] PUT /users/6a93db9e769b7ecd65c816ec 400  |  2.182 ms || Authorization Error: Only the own user can edit is details
+[30/08/2026 10:35:08] PATCH /users/6a93db9e769b7ecd65c816ec 401  |  1.374 ms || Authentication Error: Please login
+[30/08/2026 10:35:23] PATCH /users/6a93db9e769b7ecd65c816ec 400  |  1.121 ms || Authorization Error: Only the own user can change is status
+[30/08/2026 10:35:32] PATCH /users/6a93db9e769b7ecd65c816ec 400  |  0.681 ms || Authorization Error: Only the own user can change is status
+[30/08/2026 10:36:30] PATCH /users/6a93d9ea7147d9fbf23299c0 401  |  0.816 ms || Authentication Error: Please login
+[30/08/2026 10:36:39] PATCH /users/6a93d9ea7147d9fbf23299c0 201  |  153.441 ms
+[30/08/2026 10:36:51] PATCH /users/6a93d9ea7147d9fbf23299c0 201  |  128.008 ms
+[30/08/2026 10:36:57] PATCH /users/6a93d9ea7147d9fbf23299c0 201  |  133.701 ms
+[30/08/2026 10:37:43] DELETE /users/6a93db9e769b7ecd65c816ec 401  |  1.021 ms || Authentication Error: Please login
+[30/08/2026 10:37:58] DELETE /users/6a93db9e769b7ecd65c816ec 400  |  1.073 ms || Authorization Error: Only the own user or admin can delete this user
+[30/08/2026 10:38:22] DELETE /users/6a93db9e769b7ecd65c816ec 200  |  127.544 ms
+[30/08/2026 10:39:41] POST /users/login 200  |  159.779 ms
+[30/08/2026 10:40:07] DELETE /users/6a93db9e769b7ecd65c816ec 200  |  137.188 ms
+[30/08/2026 10:41:36] GET /jobs 200  |  65.177 ms
+[30/08/2026 10:42:25] POST /jobs 403  |  0.803 ms || Authorization Error: Only Recruiter users can create new job
+[30/08/2026 10:42:34] POST /jobs 401  |  0.388 ms || Authentication Error: Please login
+[30/08/2026 10:42:39] POST /jobs 403  |  0.985 ms || Authorization Error: Only Recruiter users can create new job
+[30/08/2026 10:42:43] POST /jobs 403  |  0.719 ms || Authorization Error: Only Recruiter users can create new job
+[30/08/2026 10:42:53] POST /jobs 403  |  0.552 ms || Authorization Error: Only Recruiter users can create new job
+[30/08/2026 10:42:57] POST /jobs 403  |  0.708 ms || Authorization Error: Only Recruiter users can create new job
+[30/08/2026 10:43:02] POST /jobs 403  |  0.569 ms || Authorization Error: Only Recruiter users can create new job
+[30/08/2026 10:45:06] POST /jobs 403  |  1.065 ms || Authorization Error: Only Recruiter users can create new job
+[30/08/2026 10:46:07] POST /users/login 200  |  141.997 ms
+[30/08/2026 10:46:29] POST /jobs 201  |  162.413 ms
+[30/08/2026 10:47:00] GET /jobs/6a93dfd50a6b723c825605eb 200  |  62.965 ms
+[30/08/2026 10:47:29] GET /jobs/my-jobs 401  |  0.637 ms || Authentication Error: Please login
+[30/08/2026 10:47:33] GET /jobs/my-jobs 403  |  0.928 ms || Authorization Error: Only Recruiter users can get my jobs
+[30/08/2026 10:47:39] GET /jobs/my-jobs 403  |  0.549 ms || Authorization Error: Only Recruiter users can get my jobs
+[30/08/2026 10:47:46] GET /jobs/my-jobs 403  |  0.868 ms || Authorization Error: Only Recruiter users can get my jobs
+[30/08/2026 10:47:52] GET /jobs/my-jobs 200  |  63.232 ms
+[30/08/2026 10:48:26] GET /jobs/my-jobs 401  |  0.333 ms || Authentication Error: Please login
+[30/08/2026 10:48:31] GET /jobs/my-jobs 403  |  0.575 ms || Authorization Error: Only Recruiter users can get my jobs
+[30/08/2026 10:48:51] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  62.406 ms || Internal Server Error
+[30/08/2026 10:48:58] PUT /jobs/6a93dfd50a6b723c825605eb 401  |  0.344 ms || Authentication Error: Please login
+[30/08/2026 10:49:01] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  61.177 ms || Internal Server Error
+[30/08/2026 10:49:56] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  62.687 ms || Internal Server Error
+[30/08/2026 10:50:03] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  61.526 ms || Internal Server Error
+[30/08/2026 10:50:36] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  72.606 ms || Internal Server Error
+[30/08/2026 10:51:49] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  74.800 ms || Internal Server Error
+[30/08/2026 10:52:17] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  74.573 ms || Internal Server Error
+[30/08/2026 10:52:37] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  65.332 ms || Internal Server Error
+[30/08/2026 10:53:03] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  72.731 ms || Internal Server Error
+[30/08/2026 10:53:55] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  68.011 ms || Internal Server Error
+[30/08/2026 10:54:08] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  74.358 ms || Internal Server Error
+[30/08/2026 10:54:19] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  72.822 ms || Internal Server Error
+[30/08/2026 10:54:32] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  72.531 ms || Internal Server Error
+[30/08/2026 11:22:27] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  77.083 ms || Internal Server Error
+[30/08/2026 11:22:39] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  73.962 ms || Internal Server Error
+[30/08/2026 11:25:48] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  72.714 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:26:01] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  71.956 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:26:14] PUT /jobs/6a93dfd50a6b723c825605eb 201  |  211.913 ms
+[30/08/2026 11:26:28] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  65.817 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:26:37] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  73.868 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:27:12] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  62.131 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:27:13] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  62.946 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:27:14] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  62.848 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:28:58] PUT /jobs/6a93dfd50a6b723c825605eb 500  |  73.646 ms || riginalJobFromDB is not defined
+[30/08/2026 11:29:15] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  75.554 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:31:07] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  73.112 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:31:11] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  72.370 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:33:24] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  85.603 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:34:37] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  66.852 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:36:11] POST /users/login 200  |  166.062 ms
+[30/08/2026 11:36:21] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  69.968 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:36:41] PUT /jobs/6a93dfd50a6b723c825605eb 403  |  71.035 ms || Authorization Error: Only the job creator or admin can update
+[30/08/2026 11:38:06] POST /jobs/ 201  |  161.522 ms
+[30/08/2026 11:38:50] PUT /jobs/6a93ebee104e5e39e5fe63b1 201  |  209.967 ms
+[30/08/2026 11:39:37] PATCH /jobs/6a93ebee104e5e39e5fe63b1 401  |  3.553 ms || Authentication Error: Please login
+[30/08/2026 11:39:42] PATCH /jobs/6a93ebee104e5e39e5fe63b1 400  |  4.074 ms || Cannot destructure property 'userId' of 'req.body' as it is undefined.
+[30/08/2026 11:39:51] PATCH /jobs/6a93ebee104e5e39e5fe63b1 400  |  2.309 ms || Cannot destructure property 'userId' of 'req.body' as it is undefined.
+[30/08/2026 11:41:16] PATCH /jobs/6a93ebee104e5e39e5fe63b1 401  |  2.182 ms || Authentication Error: Please login
+[30/08/2026 11:41:20] PATCH /jobs/6a93ebee104e5e39e5fe63b1 200  |  149.270 ms
+[30/08/2026 11:41:26] PATCH /jobs/6a93ebee104e5e39e5fe63b1 200  |  130.232 ms
+[30/08/2026 11:41:49] DELETE /jobs/6a93ebee104e5e39e5fe63b1 401  |  0.468 ms || Authentication Error: Please login
+[30/08/2026 11:41:53] DELETE /jobs/6a93ebee104e5e39e5fe63b1 200  |  131.626 ms
+[30/08/2026 11:42:13] POST /jobs/ 201  |  136.580 ms
+[30/08/2026 11:42:28] DELETE /jobs/6a93ece567be541627a615aa 403  |  63.257 ms || Authorization Error: Only the job creator or admin can delete
+[30/08/2026 11:42:34] DELETE /jobs/6a93ece567be541627a615aa 200  |  126.087 ms
