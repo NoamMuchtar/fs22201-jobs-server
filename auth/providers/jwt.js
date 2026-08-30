@@ -1,0 +1,27 @@
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = process.env.SECRET_KEY;
+
+// generate auth token
+const generateAuthToken = (user) => {
+  // create payload (ID, ISADMIN, isRecruiter)
+  const payload = {
+    _id: user._id,
+    isAdmin: user.isAdmin,
+    isRecruiter: user.isRecruiter,
+  };
+
+  const token = jwt.sign(payload, SECRET_KEY);
+  return token;
+};
+
+// verify token
+const verifyToken = (tokenFromClient) => {
+  try {
+    const payload = jwt.verify(tokenFromClient, SECRET_KEY);
+    return payload;
+  } catch (error) {
+    return null;
+  }
+};
+
+module.exports = { generateAuthToken, verifyToken };
